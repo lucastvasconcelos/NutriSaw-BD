@@ -39,7 +39,6 @@ module.exports = (app) => {
         let connection = app.infra.connectionFactory();
         let PacienteDAO = new app.infra.PacienteDAO(connection)
         PacienteDAO.excluir(requisicao,(err,result)=> {
-            console.log(err)
             res.redirect("/pacientes")
         })
         connection.close()   
@@ -56,6 +55,29 @@ module.exports = (app) => {
 
    app.post("/alterar",(req,res)=> {
        let requisicao = req.body
-       console.log(requisicao)
+       res.render("alterar-selecionado.ejs",{paciente:requisicao})
    })
+
+   app.get("/alterar-selecionado",(req,res)=>{
+        let query = req.query
+        let connection = app.infra.connectionFactory();
+        let PacienteDAO = new app.infra.PacienteDAO(connection)
+        PacienteDAO.consultar(query,(result)=> {
+            res.render("paciente/alterar-selecionado.ejs",{paciente:result})    
+        })
+        connection.close()
+    })
+
+    app.post("/alterar-selecionado",(req,res)=> {
+        let requisicao = req.body
+        console.log(requisicao)
+        let connection = app.infra.connectionFactory();
+        let PacienteDAO = new app.infra.PacienteDAO(connection)
+        PacienteDAO.atualizar(requisicao,(err,result) => {
+            console.log(err)
+            console.log(result)
+            res.redirect("/pacientes")
+        })
+        connection.close()
+    })
 }

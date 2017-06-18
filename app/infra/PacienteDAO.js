@@ -11,8 +11,13 @@ class PacienteDAO {
         this._connection.insert("paciente",requisicao,callback)
     }
     excluir(requisicao,callback){
-        console.log(requisicao)
         this._connection.run("DELETE FROM paciente where idpaciente=?",requisicao.id,callback)
+    }
+    consultar(query,callback){
+        this._connection.run("select * from paciente where idpaciente=?",query.id,callback)
+    }
+    atualizar(requisicao, callback){
+        this._connection.update("paciente",requisicao,{idpaciente:requisicao.idpaciente},callback)    
     }
 }
 
