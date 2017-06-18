@@ -80,4 +80,13 @@ module.exports = (app) => {
         })
         connection.close()
     })
+
+    app.get("/busca-avancada",(req,res)=>{
+        let connection = app.infra.connectionFactory();
+        let PacienteDAO = new app.infra.PacienteDAO(connection)
+        PacienteDAO.lista(result=>{
+            res.render("paciente/busca-avancada",{pacientes:result})
+        })
+        connection.close()    
+    })
 }

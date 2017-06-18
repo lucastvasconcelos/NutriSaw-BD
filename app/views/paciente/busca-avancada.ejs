@@ -31,9 +31,9 @@
               <li ><a href="/">Home</a></li>
               <li><a href="/pacientes">Pacientes</a></li>
               <li><a href="/adicionar">Adicionar</a></li>
-              <li class="active"><a href="/alterar">Alterar</a></li>
+              <li><a href="/alterar">Alterar</a></li>
               <li><a href="/excluir">Excluir</a></li>
-              <li><a href="/busca-avancada">Busca</a></li>
+              <li class="active"><a href="/busca-avancada"> Buscar </a></li>
             </ul>
           </div>
         </div>
@@ -41,44 +41,20 @@
 
      
       <div class="jumbotron">
-          <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <td>Nome</td>
-                            <td>Idade</td>
-                            <td>Peso</td>
-                            <td>Altura</td>
-                            <td>Imc</td>
-                            <td>Gordura Corporal</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%for (paciente of pacientes){%>
-                        <tr>
-                            <td><%=paciente.nome%></td>
-                            <td><%=paciente.idade%></td>
-                            <td><%=paciente.peso%></td>
-                            <td><%=paciente.altura%></td>
-                            <td><%=paciente.imc%></td>
-                            <td><%=paciente.gordura_corporal%></td>          
-                        </tr>
-                        <%}%>    
-                    </tbody>    
-                </table>
-        <form action="/alterar-selecionado" method="get" >
-            <label for="paciente">Escolhe o paciente :</label> 
-            <br>
-            <select name="id" id="paciente" class="col-xs-3">
-                <%for(paciente of pacientes){%>
-                <option value=<%=paciente.idpaciente%>> <%=paciente.nome%></option>
-                <%}%>
-            </select>
-            <br>
-            <br>
-            <button type="submit">Buscar</button>
+        <form action="/busca-avancada" method="POST">
+          <label for="selecionado">Selecionar: </label>
+          <input type="text" name="selecionado">
+          <br>
+          <label for="tabela">De: </label>
+          <input type="text" name="tabela">
+          <br>
+          <label for="onde">Where: </label>
+          <input type="text" name="onde">
+          <br>  
+          
+          </select>
         </form>
       </div>
-
     </div>
   </body>
 </html>
