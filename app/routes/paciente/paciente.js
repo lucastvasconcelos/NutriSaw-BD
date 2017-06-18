@@ -34,7 +34,7 @@ module.exports = (app) => {
         connection.close()        
     })
 
-    app.post("/excluir",(req,res)=>{
+    app.delete("/excluir",(req,res)=>{
         let requisicao = req.body
         let connection = app.infra.connectionFactory();
         let PacienteDAO = new app.infra.PacienteDAO(connection)
@@ -68,7 +68,7 @@ module.exports = (app) => {
         connection.close()
     })
 
-    app.post("/alterar-selecionado",(req,res)=> {
+    app.put("/alterar-selecionado",(req,res)=> {
         let requisicao = req.body
         console.log(requisicao)
         let connection = app.infra.connectionFactory();
