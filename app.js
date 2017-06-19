@@ -1,4 +1,5 @@
 const app = require("./config/express")()
-app.listen(3000,()=>{
+const porta = process.env.PORT || 3000
+app.listen(porta,()=>{
     console.log("servidor online")
 })

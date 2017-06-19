@@ -2,10 +2,10 @@ module.exports = (app) => {
     listaPacientes = (req,res) => {
         let connection = app.infra.connectionFactory()
         let PacienteDAO = new app.infra.PacienteDAO(connection)
-        PacienteDAO.lista((result) => {
+        PacienteDAO.lista((err,result) => {
             res.render("paciente/lista.ejs",{lista: result})
         })
-        connection.close()
+        connection.end()
     }
 
     app.get("/pacientes",listaPacientes)
@@ -22,16 +22,16 @@ module.exports = (app) => {
             if(err) console.log(err)
             res.redirect("/pacientes")
         })
-        connection.close()        
+        connection.end()        
     })
 
     app.get('/excluir',(req,res) => {
         let connection = app.infra.connectionFactory();
         let PacienteDAO = new app.infra.PacienteDAO(connection)
-        PacienteDAO.lista((result)=>{
+        PacienteDAO.lista((err,result)=>{
             res.render("paciente/excluir.ejs",{pacientes:result})
         })
-        connection.close()        
+        connection.end()        
     })
 
     app.delete("/excluir",(req,res)=>{
@@ -41,16 +41,16 @@ module.exports = (app) => {
         PacienteDAO.excluir(requisicao,(err,result)=> {
             res.redirect("/pacientes")
         })
-        connection.close()   
+        connection.end()   
     })
 
     app.get("/alterar",(req,res) => {
         let connection = app.infra.connectionFactory();
         let PacienteDAO = new app.infra.PacienteDAO(connection)
-        PacienteDAO.lista((result)=>{
+        PacienteDAO.lista((err,result)=>{
             res.render("paciente/alterar.ejs",{pacientes:result})
         })
-        connection.close()        
+        connection.end()        
    })
 
    app.post("/alterar",(req,res)=> {
@@ -63,10 +63,10 @@ module.exports = (app) => {
         console.log(query)
         let connection = app.infra.connectionFactory();
         let PacienteDAO = new app.infra.PacienteDAO(connection)
-        PacienteDAO.consultar(query,(result)=> {
+        PacienteDAO.consultar(query,(err,result)=> {
             res.render("paciente/alterar-selecionado.ejs",{paciente:result})    
         })
-        connection.close()
+        connection.end()
     })
 
     app.put("/alterar-selecionado",(req,res)=> {
@@ -77,7 +77,7 @@ module.exports = (app) => {
         PacienteDAO.atualizar(requisicao,(err,result) => {
             res.redirect("/pacientes")
         })
-        connection.close()
+        connection.end()
     })
 
     app.get("/busca-avancada",(req,res)=>{
@@ -86,6 +86,6 @@ module.exports = (app) => {
         PacienteDAO.lista(result=>{
             res.render("paciente/busca-avancada",{pacientes:result})
         })
-        connection.close()    
+        connection.end()    
     })
 }

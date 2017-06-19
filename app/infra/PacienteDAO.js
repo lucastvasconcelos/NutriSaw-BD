@@ -4,24 +4,26 @@ class PacienteDAO {
     }
     
     lista(callback){
-        this._connection.run('select * from paciente',callback)
+        this._connection.query('select * from paciente',callback)
     }
 
     adicionar(requisicao,callback){
-        this._connection.insert("paciente",requisicao,callback)
+        this._connection.query("insert into paciente set ?",requisicao,callback)
     }
     excluir(requisicao,callback){
         let id = requisicao.id
         let query = ("delete from paciente where idpaciente="+id)
-        this._connection.run(query,callback)
+        this._connection.query(query,callback)
     }
     consultar(requisicao,callback){
         let id = requisicao.id
         let query = ("select * from paciente where idpaciente="+id)  
-        this._connection.run(query,callback)
+        this._connection.query(query,callback)
     }
     atualizar(requisicao, callback){
-        this._connection.update("paciente",requisicao,{idpaciente:requisicao.idpaciente},callback)    
+        let alteracao = "update paciente set ? where idpaciente="+requisicao.idpaciente
+        console.log(alteracao)
+        this._connection.query(alteracao,requisicao,callback)    
     }
 }
 
