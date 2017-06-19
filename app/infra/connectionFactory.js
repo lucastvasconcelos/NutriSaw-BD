@@ -8,7 +8,6 @@ criarConexaoDB = () => {
     });
 } 
 
-
 module.exports = () => {
     return criarConexaoDB
 }
