@@ -44,7 +44,6 @@
         <form action="/excluir?_method=DELETE" method="POST">
         <label for="nome">Escolhe o paciente a ser excluido:</label>
         <%for(paciente of pacientes){%>
-        <%console.log(paciente.idpaciente)%>
         <div class="checkbox">
             <label><input type="checkbox" id="nome" name="id" value="<%=paciente.idpaciente%>"><%=paciente.nome%></label>
         </div>
