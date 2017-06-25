@@ -3,9 +3,11 @@ module.exports = (app) => {
         let connection = app.infra.connectionFactory()
         let PacienteDAO = new app.infra.PacienteDAO(connection)
         PacienteDAO.lista((err,result) => {
+          console.log(err)
+          console.log(result)
             res.render("paciente/lista.ejs",{lista: result})
         })
-        connection.end({timeout:60000})
+        connection.end()
     }
 
     app.get("/pacientes",listaPacientes)
@@ -22,7 +24,7 @@ module.exports = (app) => {
             if(err) console.log(err)
             res.redirect("/pacientes")
         })
-        connection.end({timeout:60000})        
+        connection.end({timeout:60000})
     })
 
     app.get('/excluir',(req,res) => {
@@ -31,7 +33,7 @@ module.exports = (app) => {
         PacienteDAO.lista((err,result)=>{
             res.render("paciente/excluir.ejs",{pacientes:result})
         })
-        connection.end({timeout:60000})        
+        connection.end({timeout:60000})
     })
 
     app.delete("/excluir",(req,res)=>{
@@ -41,7 +43,7 @@ module.exports = (app) => {
         PacienteDAO.excluir(requisicao,(err,result)=> {
             res.redirect("/pacientes")
         })
-        connection.end({timeout:60000})   
+        connection.end({timeout:60000})
     })
 
     app.get("/alterar",(req,res) => {
@@ -50,7 +52,7 @@ module.exports = (app) => {
         PacienteDAO.lista((err,result)=>{
             res.render("paciente/alterar.ejs",{pacientes:result})
         })
-        connection.end({timeout:60000})        
+        connection.end({timeout:60000})
    })
 
    app.post("/alterar",(req,res)=> {
@@ -64,7 +66,7 @@ module.exports = (app) => {
         let connection = app.infra.connectionFactory();
         let PacienteDAO = new app.infra.PacienteDAO(connection)
         PacienteDAO.consultar(query,(err,result)=> {
-            res.render("paciente/alterar-selecionado.ejs",{paciente:result})    
+            res.render("paciente/alterar-selecionado.ejs",{paciente:result})
         })
         connection.end({timeout:60000})
     })
@@ -86,6 +88,6 @@ module.exports = (app) => {
         PacienteDAO.lista(result=>{
             res.render("paciente/busca-avancada",{pacientes:result})
         })
-        connection.end({timeout:60000})    
+        connection.end({timeout:60000})
     })
 }
