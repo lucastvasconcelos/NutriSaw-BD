@@ -4,8 +4,8 @@ criarConexaoDB = () => {
         return mysql.createConnection({
             host:"localhost",
             user:'root',
-            password:'lucas',
-            database:'nutrisaw'
+            password:'',
+            database:'NutriSaw'
         })
     }
     if(process.env.NODE_ENV == 'production') {
