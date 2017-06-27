@@ -26,9 +26,8 @@ class PacienteDAO {
         this._connection.query(alteracao,requisicao,callback)    
     }
     buscar(requisicao,callback){
-
-        let query = ("select * from paciente order by peso DESC")
-        console.log(query)
+        let teste = requisicao.nome
+        let query = "select * from pacientes where nome="+"'"+teste+"'"
         this._connection.query(query,callback)
     }
 }

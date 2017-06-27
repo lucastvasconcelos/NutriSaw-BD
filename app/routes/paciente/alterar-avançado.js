@@ -1,4 +1,4 @@
-module.exports = (app) => {
+    module.exports = (app) => {
        app.get("/alterar-selecionado",(req,res)=>{
         let query = req.query
         console.log(query)
@@ -12,7 +12,6 @@ module.exports = (app) => {
 
     app.put("/alterar-selecionado",(req,res)=> {
         let requisicao = req.body
-        console.log(requisicao)
         let connection = app.infra.connectionFactory();
         let PacienteDAO = new app.infra.PacienteDAO(connection)
         PacienteDAO.atualizar(requisicao,(err,result) => {

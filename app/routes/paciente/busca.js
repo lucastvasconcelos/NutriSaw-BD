@@ -10,10 +10,11 @@ module.exports = (app) => {
     
     app.post("/busca-avancada",(req,res)=>{
         let requisicao = req.body
+        console.log(requisicao)
         let connection = app.infra.connectionFactory();
         let PacienteDAO = new app.infra.PacienteDAO(connection)
         PacienteDAO.buscar(requisicao,(err,result)=> {
-            console.log(result)
+            console.log("q")
             })
         connection.end({timeout:60000})
     })
