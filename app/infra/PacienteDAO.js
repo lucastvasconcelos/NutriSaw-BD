@@ -42,7 +42,7 @@ class PacienteDAO {
             var idade = ""
         }
         if(requisicao.imc != "0"){
-            if(nome != "" || idade !=""){
+            if(nome != "" || idade != ""){
                 var imc = "and "+app.helpers.imc(requisicao.imc)
             }  
             else{
@@ -53,7 +53,7 @@ class PacienteDAO {
             var imc = ""
         }
         if(requisicao.sexo != "0"){
-            if(nome != "" || idade != "" || imc != "0"){
+            if(nome != "" || idade != "" || imc != ""){
                 var sexo = "and sexo='"+requisicao.sexo+"'"
             }
             else{
