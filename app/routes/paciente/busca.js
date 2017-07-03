@@ -10,7 +10,6 @@ module.exports = (app) => {
     
     app.post("/busca-avancada",(req,res)=>{
         let requisicao = req.body
-        console.log(requisicao)
         let connection = app.infra.connectionFactory();
         let PacienteDAO = new app.infra.PacienteDAO(connection)
         if(requisicao.nome != "" && requisicao.idade == "" && requisicao.imc=="0" && requisicao.sexo=="0" && requisicao.ordenar==""){
@@ -28,8 +27,7 @@ module.exports = (app) => {
         }        
         
         if(requisicao.nome == "" && requisicao.idade == "" && requisicao.imc!="0" && requisicao.sexo=="0" && requisicao.ordenar==""){
-            PacienteDAO.buscarPorImc(requisicao,(err,result)=> {
-                    console.log(err)
+            PacienteDAO.buscarPorImc(app,requisicao,(err,result)=> {
                     console.log(result)
                 })
 
@@ -49,7 +47,7 @@ module.exports = (app) => {
         }
 
         if(requisicao.nome != "" && requisicao.idade == "" && requisicao.imc !="0" && requisicao.sexo=="0" && requisicao.ordenar==""){
-            PacienteDAO.buscarPorNomeEImc(requisicao,(err,result)=>{
+            PacienteDAO.buscarPorNomeEImc(app,requisicao,(err,result)=>{
                     console.log(err)
                     console.log(result)      
             })
@@ -59,6 +57,24 @@ module.exports = (app) => {
                     console.log(err)
                     console.log(result)
             })
+        }
+        if(requisicao.nome == "" && requisicao.idade != "" && requisicao.imc !="0" && requisicao.sexo=="0" && requisicao.ordenar==""){
+            PacienteDAO.buscarPorIdadeEImc(requisicao,(err,result)=>{
+                console.log(err)
+                console.log(result)
+            })
+        }
+        if(requisicao.nome == "" && requisicao.idade != "" && requisicao.imc =="0" && requisicao.sexo!="0" && requisicao.ordenar==""){
+            PacienteDAO.buscarPorIdadeESexo(requisicao,(err,result)=>{
+                console.log(err)
+                console.log(result)
+            })
+        }
+        if(requisicao.nome == "" && requisicao.idade == "" && requisicao.imc !="0" && requisicao.sexo!="0" && requisicao.ordenar==""){
+            PacienteDAO.buscaPorImcESexo(requisicao,(err,result)=>{
+                console.log(err)
+                console.log(result)
+            })    
         }
         if(requisicao.nome=="" && requisicao.idade == "" && requisicao.imc =="0" && requisicao.sexo == "0" && requisicao.ordenar!=0){
             throw new Error ("IMPOSSIVEL ORDENAR O VAZIO!!")

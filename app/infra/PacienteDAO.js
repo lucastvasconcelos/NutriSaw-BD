@@ -35,33 +35,13 @@ class PacienteDAO {
         let query = "select * from paciente where idade="+teste
         this._connection.query(query,callback)
     }
-    buscarPorImc(requisicao,callback){
+
+    buscarPorImc(app,requisicao,callback){
         let imc = requisicao.imc
-        if(imc == '1'){
-            let imc = "select * from paciente where imc < 18.5"
-            this._connection.query(imc,callback)
-        }
-        if(imc == '2'){
-            let imc = "select * from paciente where imc >= 18.5 and <=25"
-            this._connection.query(imc,callback)
-        }
-        if(imc == '3'){
-            let imc = "select * from paciente where imc > 25 and imc <= 30"
-            this._connection.query(imc,callback)
-        }
-        if(imc == '4'){
-            let imc = "select * from paciente where imc > 30 and imc <=35"
-            this._connection.query(imc,callback)
-        }
-        if(imc == '5'){
-            let imc = "select * from paciente where imc > 35 and imc <= 40"
-            this._connection.query(imc,callback)
-        }
-        if(imc == '6'){
-            let imc = "select * from paciente where imc > 40"
-            this._connection.query(imc,callback)
-        }
-        
+        let query = "select * from paciente where "+app.helpers.imc(imc)
+        console.log(query)
+        this._connection.query(query,callback)
+    
     }
     buscarPorSexo(requisicao,callback){
         let teste = requisicao.sexo
@@ -74,33 +54,12 @@ class PacienteDAO {
         let query = "select * from paciente where nome='"+nome+"'and idade="+idade
         this._connection.query(query,callback)
     }
-    buscarPorNomeEImc(requisicao,callback){
+    buscarPorNomeEImc(app,requisicao,callback){
         let nome = requisicao.nome
-        let imc = requisicao.imc
-        if(imc == '1'){
-            let imcENome = "select * from paciente where imc < 18.5 and nome='"+nome+"'"
-            this._connection.query(imcENome,callback)
-        }
-        if(imc == '2'){
-            let imcENome = "select * from paciente where (imc >= 18.5 and imc <=25) and nome='"+nome+"'"
-            this._connection.query(imcENome,callback)
-        }
-        if(imc == '3'){
-            let imc = "select * from paciente where (imc > 25 and imc <= 30) and nome='"+nome+"'"
-            this._connection.query(imc,callback)
-        }
-        if(imc == '4'){
-            let imc = "select * from paciente where (imc > 30 and imc <=35) and nome='"+nome+"'"
-            this._connection.query(imc,callback)
-        }
-        if(imc == '5'){
-            let imc = "select * from paciente where (imc > 35 and imc <= 40)  and nome='"+nome+"'"
-            this._connection.query(imc,callback)
-        }
-        if(imc == '6'){
-            let imc = "select * from paciente where imc > 40  and nome='"+nome+"'"
-            this._connection.query(imc,callback)
-        }
+        let imc = app.helpers.imc(requisicao.imc)
+        let query = "select * from paciente where "+imc+"and nome='"+nome+"'"
+        this._connection.query(query,callback)
+        
     }
     buscarPorNomeESexo(requisicao,callback){
         let nome = requisicao.nome
@@ -109,69 +68,46 @@ class PacienteDAO {
         this._connection.query(query,callback)
     }
     buscarPorIdadeEImc(requisicao,callback){
-        let idade = requisicao.idade
-        let imc = requisicao.imc
-        if(imc == '1'){
-            let imcEIdade = "select * from paciente where imc < 18.5 and idade='"+idade+"'"
-            this._connection.query(imcENome,callback)
-        }
-        if(imc == '2'){
-            let imcEIdade = "select * from paciente where (imc >= 18.5 and imc <=25) and idade='"+idade+"'"
-            this._connection.query(imcEidade,callback)
-        }
-        if(imc == '3'){
-            let imcEIdade = "select * from paciente where (imc > 25 and imc <= 30) and idade='"+idade+"'"
-            this._connection.query(imcEIdade,callback)
-        }
-        if(imc == '4'){
-            let imcEIdade = "select * from paciente where (imc > 30 and imc <=35) and idade='"+idade+"'"
-            this._connection.query(imcEIdade,callback)
-        }
-        if(imc == '5'){
-            let imcEIdade = "select * from paciente where (imc > 35 and imc <= 40)  and idade='"+idade+"'"
-            this._connection.query(imcEIdade,callback)
-        }
-        if(imc == '6'){
-            let imcEIdade = "select * from paciente where imc > 40  and idade='"+idade+"'"
-            this._connection.query(imcEIdade,callback)
-        }        
+        let query = "select * from paciente where imc="+app.helpers.imc(requisicao.imc) +"  and idade='"+requisicao.idade+"'"
+        this._connection.query(query,callback)
+                
     }
     buscarPorIdadeESexo(requisicao,callback){
         let idade = requisicao.idade
         let sexo = requisicao.sexo
-        let query = "select * from paciente where idade='"+idade+"'and idade='"+sexo+"'"
+        let query = "select * from paciente where idade='"+idade+"'and sexo='"+sexo+"'"
         this._connection.query(query,callback)
     }
     buscarPorImcESexo(requisicao,callback){
-        let imc = requisicao.imc
+        let query = "select * from paciente where imc="+app.helpers.imc(requisicao.imc)+"and sexo='"+sexo+"'"
+        this._connection.query(query,callback)       
+    }
+
+    buscarPorNomeIdadeIMC(app,requisicao,callback){
+            let query = "select * from paciente where imc ="+app.helpers.imc(requisicao.imc)+"and nome='"+requisicao.nome+"'and idade='"+requisicao.idade+"'"
+            this._connection.query(query,callback)
+        }
+
+    buscarPorNomeIdadeSexo(requisicao,callback){
+        let nome = requisicao.nome
+        let idade = requisicao.idade
         let sexo = requisicao.sexo
-        if(imc == '1'){
-            let imcEIsexo = "select * from paciente where imc < 18.5 and sexo='"+sexo+"'"
-            this._connection.query(imcENome,callback)
-        }
-        if(imc == '2'){
-            let imcEsexo = "select * from paciente where (imc >= 18.5 and imc <=25) and sexo='"+sexo+"'"
-            this._connection.query(imcEsexo,callback)
-        }
-        if(imc == '3'){
-            let imcEsexo = "select * from paciente where (imc > 25 and imc <= 30) and sexo='"+sexo+"'"
-            this._connection.query(imcEsexo,callback)
-        }
-        if(imc == '4'){
-            let imcEsexo = "select * from paciente where (imc > 30 and imc <=35) and sexo='"+sexo+"'"
-            this._connection.query(imcEsexo,callback)
-        }
-        if(imc == '5'){
-            let imcEsexo = "select * from paciente where (imc > 35 and imc <= 40)  and sexo='"+sexo+"'"
-            this._connection.query(imcEsexo,callback)
-        }
-        if(imc == '6'){
-            let imcEsexo = "select * from paciente where imc > 40  and sexo='"+sexo+"'"
-            this._connection.query(imcEsexo,callback)
-        }       
+        let query = "select * from paciente where nome='"+nome+"' and idade='"+idade+"'and sexo='"+sexo+"'"
+        this._connection.query(query,callback)
+        
+    }
+    buscarPorIdadeIMCSexo(app,requisicao,callback){
+        let query = "select * from paciente where idade ="+requisicao.idade+"and imc="+app.helpers.imc(requisicao.imc)+"and sexo='"+requisicao.sexo+"'"
+        this._connection.query(query,callback)
+    }
+    
+    buscarPorNomeIdadeIMCSexo(requisicao,callback){
+        let query = "select * form paciente where nome='"+requisicao.nome+"'and idade="+requisicao.idade+"and IMC="+app.helpers.imc(requisicao.imc)+"and sexo='"+requisicao.sexo+"'"
+        this._connection.query(query,callback)
+    
     }
 }
 
-module.exports = () => {
+module.exports = (app) => {
     return PacienteDAO
 }

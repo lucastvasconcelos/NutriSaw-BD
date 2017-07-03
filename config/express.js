@@ -15,6 +15,7 @@ module.exports = () => {
    
     load('routes',{cwd:'app'})
         .then('infra')
+        .then('helpers')
         .into(app)
 
     return app    
