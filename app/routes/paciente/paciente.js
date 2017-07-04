@@ -7,7 +7,7 @@ module.exports = (app) => {
           console.log(result)
             res.render("paciente/lista.ejs",{lista: result})
         })
-        connection.end()
+        connection.end({timeout:60000})
     }
 
     app.get("/pacientes",listaPacientes)
